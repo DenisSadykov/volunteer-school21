@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<!--
+  Style: Editorial Dark Tech + Glassmorphism (cosmic) — autonomous animations edition
+  Palette: void #050015, royal #6D28D9, electric #A855F7, mint #65E0C4, coral #FB7185
+-->
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Исповедь · odessabu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+:root{
+  --void:#050015; --void-2:#0B0224; --cream:#FAF8FF;
+  --royal:#6D28D9; --electric:#A855F7; --mint:#65E0C4; --mint-deep:#2DD4BF;
+  --coral:#FB7185; --amber:#FBBF24;
+  --glass-bg:rgba(255,255,255,0.06); --glass-bg-strong:rgba(255,255,255,0.10);
+  --glass-border:rgba(255,255,255,0.12); --glass-border-bright:rgba(255,255,255,0.22);
+  --f-display:'Manrope','Inter',system-ui,sans-serif;
+  --f-body:'Inter',system-ui,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+  --ease:cubic-bezier(.22,.61,.36,1); --ease-out:cubic-bezier(.16,1,.3,1); --spring:cubic-bezier(.5,1.6,.4,1);
+  --grad-brand:linear-gradient(120deg,#A855F7 0%,#65E0C4 100%);
+  --grad-warm:linear-gradient(120deg,#FB7185 0%,#A855F7 100%);
+  --grad-cool:linear-gradient(120deg,#6D28D9 0%,#2DD4BF 100%);
+  --grad-mesh:radial-gradient(60% 80% at 10% 10%, rgba(168,85,247,.35), transparent 60%),
+              radial-gradient(50% 70% at 90% 20%, rgba(101,224,196,.28), transparent 60%),
+              radial-gradient(70% 80% at 70% 90%, rgba(251,113,133,.20), transparent 65%),
+              radial-gradient(50% 60% at 20% 80%, rgba(109,40,217,.35), transparent 60%),
+              linear-gradient(180deg,#050015 0%,#0B0224 60%,#050015 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;width:100%;overflow:hidden}
+body{font-family:var(--f-body);color:var(--cream);background:var(--void);-webkit-font-smoothing:antialiased}
+::selection{background:rgba(168,85,247,.4);color:#fff}
+
+/* ===== BACKGROUND ===== */
+.stage{position:fixed;inset:-16%;z-index:-3;background:var(--grad-mesh)}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;mix-blend-mode:screen;animation:drift 22s ease-in-out infinite}
+.orb.a{width:680px;height:680px;background:radial-gradient(circle,#A855F7 0%,transparent 65%);top:-200px;left:-180px}
+.orb.b{width:780px;height:780px;background:radial-gradient(circle,#65E0C4 0%,transparent 65%);bottom:-260px;right:-240px;animation-delay:-8s}
+.orb.c{width:520px;height:520px;background:radial-gradient(circle,#6D28D9 0%,transparent 65%);top:30%;right:15%;animation-delay:-5s;opacity:.4}
+.orb.d{width:420px;height:420px;background:radial-gradient(circle,#FB7185 0%,transparent 65%);bottom:18%;left:20%;animation-delay:-13s;opacity:.3}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(80px,-50px) scale(1.1)}66%{transform:translate(-60px,40px) scale(.95)}}
+
+/* aurora ribbon */
+.aurora{position:fixed;inset:-20%;z-index:-2;pointer-events:none;opacity:.5;
+  background:conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(168,85,247,.08) 60deg, transparent 120deg, rgba(101,224,196,.08) 200deg, transparent 260deg, rgba(251,113,133,.06) 320deg, transparent 360deg);
+  animation:aurora-spin 40s linear infinite;mix-blend-mode:screen}
+@keyframes aurora-spin{to{transform:rotate(360deg)}}
+
+/* starfield canvas */
+#starCanvas{position:fixed;inset:0;z-index:-1;pointer-events:none}
+
+.grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.07;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>")}
+.vignette{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at center, transparent 50%, rgba(5,0,21,.6) 100%)}
+
+/* ===== CHROME ===== */
+.progress{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#A855F7,#65E0C4);z-index:9998;transition:width .6s var(--ease);box-shadow:0 0 16px rgba(168,85,247,.6)}
+.top-meta{position:fixed;top:24px;right:32px;z-index:100;display:flex;align-items:center;gap:18px;font-family:var(--f-mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.top-meta .dot-live{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 12px var(--mint);animation:pulse-live 2s ease-in-out infinite}
+@keyframes pulse-live{0%,100%{opacity:.5}50%{opacity:1}}
+.top-meta .clock{color:#fff;font-weight:500}
+.top-brand{position:fixed;top:24px;left:32px;z-index:100;display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.top-brand::before{content:"";width:24px;height:1px;background:rgba(255,255,255,.5)}
+
+/* ===== DECK ===== */
+.deck{position:fixed;inset:0;perspective:2400px}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:88px 7vw 100px;opacity:0;pointer-events:none;transform:translateY(40px) scale(.98);
+  transition:opacity .7s var(--ease),transform .8s var(--ease-out),clip-path .9s var(--ease-out);
+  clip-path:inset(0 50% 0 50%);}
+.slide.active{opacity:1;pointer-events:auto;transform:translateY(0) scale(1);clip-path:inset(0 0 0 0)}
+.slide.prev{transform:translateY(-30px) scale(.97);clip-path:inset(0 50% 0 50%)}
+
+.head{align-self:flex-start;width:100%;max-width:1320px}
+.body-area{align-self:center;width:100%;max-width:1320px;flex:1;display:flex;flex-direction:column;justify-content:center;margin-top:3vh}
+
+.pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:var(--glass-bg-strong);border:1px solid var(--glass-border);color:#fff;font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:3px;text-transform:uppercase;border-radius:99px;backdrop-filter:blur(20px)}
+.pill::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:pulse-live 2s ease-in-out infinite}
+
+.title{font-family:var(--f-display);font-size:clamp(40px,5.6vw,80px);font-weight:700;line-height:1.0;letter-spacing:-2.5px;color:#fff;margin-top:18px;max-width:20ch}
+.title.compact{font-size:clamp(28px,3.6vw,48px);letter-spacing:-1.5px}
+.title em{font-style:normal;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:inline-block;background-size:200% 100%;animation:gradient-swipe 5s ease-in-out infinite}
+.subtitle{font-family:var(--f-body);font-size:clamp(15px,1.4vw,20px);color:rgba(255,255,255,.65);margin-top:18px;max-width:60ch;line-height:1.5}
+
+.footer{position:absolute;bottom:30px;left:7vw;right:7vw;display:flex;justify-content:space-between;align-items:center;font-family:var(--f-mono);font-size:11px;color:rgba(255,255,255,.5);letter-spacing:1.5px}
+.footer .right{font-weight:500;color:rgba(255,255,255,.85)}
+
+/* ===== REVEALS ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s var(--ease-out),transform .9s var(--ease-out)}
+.slide.active .reveal{opacity:1;transform:translateY(0)}
+.slide.active .r1{transition-delay:.10s}
+.slide.active .r2{transition-delay:.18s}
+.slide.active .r3{transition-delay:.28s}
+.slide.active .r4{transition-delay:.38s}
+.slide.active .r5{transition-delay:.48s}
+.slide.active .r6{transition-delay:.58s}
+.slide.active .r7{transition-delay:.68s}
+.slide.active .r8{transition-delay:.78s}
+
+.title-words .w{display:inline-block;opacity:0;transform:translateY(40%) skewY(4deg);transition:opacity .7s var(--ease-out),transform .9s var(--ease-out)}
+.slide.active .title-words .w{opacity:1;transform:translateY(0) skewY(0)}
+.slide.active .title-words .w:nth-child(1){transition-delay:.15s}
+.slide.active .title-words .w:nth-child(2){transition-delay:.22s}
+.slide.active .title-words .w:nth-child(3){transition-delay:.29s}
+.slide.active .title-words .w:nth-child(4){transition-delay:.36s}
+.slide.active .title-words .w:nth-child(5){transition-delay:.43s}
+.slide.active .title-words .w:nth-child(6){transition-delay:.50s}
+.slide.active .title-words .w:nth-child(7){transition-delay:.57s}
+
+/* ===== GLASS + idle float + animated border glow ===== */
+.glass{background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:24px;
+  backdrop-filter:blur(24px) saturate(160%);box-shadow:0 24px 60px rgba(5,0,21,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  position:relative;overflow:hidden}
+.glass::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(135deg,rgba(255,255,255,.05),transparent 45%);pointer-events:none}
+/* sweeping light across glass */
+.glass::before{content:"";position:absolute;top:0;bottom:0;width:60%;left:-80%;
+  background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.07) 45%,rgba(255,255,255,.13) 50%,rgba(255,255,255,.07) 55%,transparent 100%);
+  transform:skewX(-12deg);animation:sheen 6s ease-in-out infinite;pointer-events:none;z-index:2}
+@keyframes sheen{0%,60%{left:-80%}90%,100%{left:130%}}
+
+/* idle float for cards (no hover needed) */
+.float{animation:idle-float 6s ease-in-out infinite}
+.float.f2{animation-delay:-2s}
+.float.f3{animation-delay:-4s}
+@keyframes idle-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* glowing ring around accent cards */
+.glow-ring{position:relative}
+.glow-ring .ring{position:absolute;inset:-2px;border-radius:26px;padding:2px;pointer-events:none;
+  background:conic-gradient(from var(--ang,0deg),transparent 0%,#A855F7 12%,#65E0C4 25%,transparent 40%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  animation:ring-rotate 4s linear infinite;z-index:3}
+@property --ang{syntax:'<angle>';initial-value:0deg;inherits:false}
+@keyframes ring-rotate{to{--ang:360deg}}
+
+/* ===== SLIDE 1: COVER ===== */
+.cover-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;position:relative;width:100%;height:100%}
+.cover-title{font-family:var(--f-display);font-size:clamp(80px,14vw,220px);font-weight:800;line-height:.85;letter-spacing:-7px;position:relative;z-index:2}
+.cover-title .ltr{display:inline-block;background:linear-gradient(120deg,#fff 0%,#A855F7 45%,#65E0C4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:300% 100%;animation:gradient-swipe 6s ease-in-out infinite, ltr-bob 4s ease-in-out infinite;opacity:0;transform:translateY(60px) rotate(6deg)}
+.slide.active .cover-title .ltr{opacity:1;transform:translateY(0) rotate(0);transition:opacity .7s var(--ease-out),transform .9s var(--spring)}
+@keyframes ltr-bob{0%,100%{translate:0 0}50%{translate:0 -6px}}
+@keyframes gradient-swipe{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.cover-q{margin-top:2vh;font-family:var(--f-display);font-size:clamp(16px,2vw,26px);font-weight:500;color:var(--mint);letter-spacing:6px;text-transform:uppercase;animation:bob 3s ease-in-out infinite;text-shadow:0 0 24px rgba(101,224,196,.6)}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.cover-divider{display:flex;align-items:center;gap:14px;color:rgba(255,255,255,.4);font-family:var(--f-mono);font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-top:3vh}
+.cover-divider .l{width:60px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6));animation:line-grow 2.5s ease-in-out infinite alternate}
+.cover-divider .l:last-child{background:linear-gradient(270deg,transparent,rgba(255,255,255,.6))}
+@keyframes line-grow{from{width:40px;opacity:.4}to{width:80px;opacity:1}}
+/* halo behind cover title */
+.halo{position:absolute;width:60vw;height:60vw;max-width:800px;max-height:800px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,85,247,.22) 0%,transparent 60%);
+  animation:halo-pulse 5s ease-in-out infinite;z-index:0;pointer-events:none}
+@keyframes halo-pulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
+/* orbit rings */
+.orbit{position:absolute;border:1px solid rgba(255,255,255,.07);border-radius:50%;pointer-events:none}
+.orbit.o1{width:44vw;height:44vw;max-width:620px;max-height:620px;animation:orbit-spin 30s linear infinite}
+.orbit.o2{width:58vw;height:58vw;max-width:820px;max-height:820px;animation:orbit-spin 50s linear infinite reverse}
+.orbit .sat{position:absolute;top:-4px;left:50%;width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 14px var(--mint)}
+.orbit.o2 .sat{background:var(--electric);box-shadow:0 0 14px var(--electric)}
+@keyframes orbit-spin{to{transform:rotate(360deg)}}
+
+/* ===== SLIDE 2: PROFILE ===== */
+.profile{display:flex;align-items:center;gap:60px}
+.profile-photo{width:300px;height:300px;border-radius:32px;overflow:hidden;position:relative;flex-shrink:0;
+  box-shadow:0 30px 80px rgba(168,85,247,.35), 0 0 0 1px rgba(255,255,255,.1);animation:photo-glow 4s ease-in-out infinite}
+@keyframes photo-glow{0%,100%{box-shadow:0 30px 80px rgba(168,85,247,.3),0 0 0 1px rgba(255,255,255,.1)}50%{box-shadow:0 30px 100px rgba(101,224,196,.4),0 0 0 1px rgba(255,255,255,.18)}}
+.profile-photo img{width:100%;height:100%;object-fit:cover;display:block;animation:kenburns 14s ease-in-out infinite alternate}
+@keyframes kenburns{from{transform:scale(1) translate(0,0)}to{transform:scale(1.12) translate(-2%,2%)}}
+.profile-info h2{font-family:var(--f-display);font-size:clamp(48px,6vw,90px);font-weight:800;letter-spacing:-3px;color:#fff;line-height:1}
+.profile-info .handle{font-family:var(--f-mono);font-size:18px;letter-spacing:5px;color:var(--mint);margin-top:14px;text-transform:uppercase;text-shadow:0 0 20px rgba(101,224,196,.5)}
+.profile-info .stamp{font-family:var(--f-mono);font-size:13px;letter-spacing:4px;color:rgba(255,255,255,.45);margin-top:24px;padding:10px 18px;border:1px solid var(--glass-border);border-radius:99px;display:inline-block}
+.typing{border-right:2px solid var(--mint);padding-right:4px;animation:caret 1s step-end infinite}
+@keyframes caret{0%,100%{border-color:var(--mint)}50%{border-color:transparent}}
+
+/* ===== VERSUS ===== */
+.versus{display:grid;gap:24px;margin-top:5vh;align-items:stretch}
+.versus.two{grid-template-columns:1fr 80px 1fr}
+.versus.three{grid-template-columns:1fr 60px 1fr 60px 1fr}
+.versus.trio{grid-template-columns:repeat(3,1fr)}
+.vcard{padding:40px 36px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:16px;min-height:300px;justify-content:center}
+.vcard .vico{width:72px;height:72px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 16px 40px rgba(0,0,0,.35);animation:ico-pop 3.4s ease-in-out infinite}
+@keyframes ico-pop{0%,100%{transform:scale(1) rotate(0deg)}50%{transform:scale(1.1) rotate(-4deg)}}
+.vcard.path .vico{background:var(--grad-cool)}
+.vcard.result .vico{background:var(--grad-warm);animation-delay:-1.1s}
+.vcard.people .vico{background:linear-gradient(120deg,#FBBF24,#A855F7);animation-delay:-2.2s}
+.vcard h3{font-family:var(--f-display);font-size:30px;font-weight:800;letter-spacing:1px;color:#fff;text-transform:uppercase}
+.vcard p{font-size:14px;color:rgba(255,255,255,.65);line-height:1.5}
+.vglyph{display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-size:40px;font-weight:800;color:rgba(255,255,255,.3);animation:glyph-pulse 2s ease-in-out infinite}
+@keyframes glyph-pulse{0%,100%{transform:scale(1);opacity:.3}50%{transform:scale(1.3);opacity:.9}}
+
+/* ===== PHOTO GRIDS — ken burns everywhere ===== */
+.photo-grid{display:grid;gap:22px;margin-top:5vh;width:100%}
+.photo-grid.cols2{grid-template-columns:1fr 1fr}
+.photo-grid.cols3{grid-template-columns:repeat(3,1fr)}
+.photo-card{border-radius:24px;overflow:hidden;position:relative;min-height:140px;box-shadow:0 24px 60px rgba(5,0,21,.5), inset 0 1px 0 rgba(255,255,255,.08);border:1px solid var(--glass-border)}
+.photo-card img{width:100%;height:100%;object-fit:cover;display:block;min-height:140px;animation:kenburns 16s ease-in-out infinite alternate}
+.photo-card:nth-child(2) img{animation-delay:-5s;animation-direction:alternate-reverse}
+.photo-card:nth-child(3) img{animation-delay:-9s}
+.photo-card::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(5,0,21,.55) 100%);pointer-events:none}
+.photo-card.tall{grid-row:span 2;min-height:220px}
+.photo-card.tall img{min-height:220px}
+@keyframes driftA{0%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(8px,-12px) rotate(.6deg)}50%{transform:translate(-6px,-4px) rotate(-.5deg)}75%{transform:translate(5px,9px) rotate(.4deg)}100%{transform:translate(0,0) rotate(0deg)}}
+@keyframes driftB{0%{transform:translate(0,0) rotate(0deg)}30%{transform:translate(-10px,7px) rotate(-.6deg)}60%{transform:translate(7px,-9px) rotate(.5deg)}100%{transform:translate(0,0) rotate(0deg)}}
+@keyframes driftC{0%{transform:translate(0,0) rotate(0deg)}20%{transform:translate(6px,10px) rotate(.5deg)}55%{transform:translate(-9px,-7px) rotate(-.4deg)}80%{transform:translate(4px,-5px) rotate(.3deg)}100%{transform:translate(0,0) rotate(0deg)}}
+.photo-card.drift1{animation:driftA 9s ease-in-out infinite}
+.photo-card.drift2{animation:driftB 11s ease-in-out infinite;animation-delay:-3s}
+.photo-card.drift3{animation:driftC 13s ease-in-out infinite;animation-delay:-6s}
+.photo-card .tag{position:absolute;bottom:16px;left:18px;font-family:var(--f-mono);font-size:10px;letter-spacing:2.5px;color:#fff;text-transform:uppercase;background:rgba(5,0,21,.5);backdrop-filter:blur(10px);padding:6px 12px;border-radius:99px;border:1px solid rgba(255,255,255,.15);z-index:1}
+
+.banner{width:100%;border-radius:24px;overflow:hidden;position:relative;margin-top:3vh;box-shadow:0 24px 70px rgba(5,0,21,.55);border:1px solid var(--glass-border)}
+.banner.square{box-shadow:none;border:none}
+.banner img{width:100%;height:100%;object-fit:cover;display:block;max-height:220px;animation:kenburns 18s ease-in-out infinite alternate}
+.banner::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,0,21,.6) 0%,transparent 50%)}
+.banner.square{border-radius:0;border-width:0;display:flex;justify-content:center}
+.banner.square img{max-height:280px;width:auto;height:auto;max-width:100%;object-fit:contain;animation:none}
+.banner.square::after{display:none}
+
+.phase-row{display:flex;gap:20px;margin-top:4vh;flex-wrap:wrap;justify-content:center}
+.phase-pill{padding:16px 26px;display:flex;align-items:center;gap:14px;border-radius:99px}
+.phase-pill .dotc{width:10px;height:10px;border-radius:50%;flex-shrink:0;animation:pulse-live 1.6s ease-in-out infinite}
+.phase-pill span{font-family:var(--f-mono);font-size:13px;letter-spacing:1.5px;color:#fff}
+
+/* ===== FINAL ===== */
+.final{position:relative;width:100%;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:24px}
+.final-pill{display:inline-flex;align-items:center;gap:10px;padding:10px 22px;background:rgba(255,255,255,.06);border:1px solid var(--glass-border);border-radius:99px;font-family:var(--f-mono);font-size:11px;letter-spacing:3px;color:rgba(255,255,255,.7);text-transform:uppercase;backdrop-filter:blur(20px)}
+.final-pill::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:pulse-live 2s ease-in-out infinite}
+.final-title{font-family:var(--f-display);font-size:clamp(70px,12vw,200px);font-weight:800;line-height:.85;letter-spacing:-7px;position:relative;z-index:2}
+.final-title .w{display:inline-block;background:linear-gradient(120deg,#fff 0%,#A855F7 45%,#65E0C4 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 100%;animation:gradient-swipe 6s ease-in-out infinite}
+.final-gif{width:130px;height:130px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,.2);box-shadow:0 0 50px rgba(168,85,247,.5);margin-top:1vh;animation:bob 3s ease-in-out infinite}
+.final-gif img{width:100%;height:100%;object-fit:cover}
+.rocket{position:fixed;left:-40vw;top:120vh;width:22vw;z-index:5;pointer-events:none;visibility:hidden}
+.rocket .rocket-svg{width:100%;height:auto;display:block;overflow:visible;filter:drop-shadow(0 0 40px rgba(168,85,247,.7))}
+.rocket.launch{visibility:visible;animation:rocket-fly 2s cubic-bezier(.55,0,.8,1) forwards}
+@keyframes rocket-fly{from{left:-30vw;top:115vh}50%{left:42vw;top:42vh}to{left:128vw;top:-45vh}}
+.rocket .svg-flame{transform-origin:60px 50px;opacity:0}
+.rocket.launch .svg-flame{opacity:1;animation:svg-flick .09s linear infinite alternate}
+@keyframes svg-flick{from{transform:scaleX(.8) scaleY(.9)}to{transform:scaleX(1.3) scaleY(1.12)}}
+.tpart{position:fixed;border-radius:50%;pointer-events:none;z-index:4;
+  background:radial-gradient(circle,rgba(253,230,138,.95) 0%,rgba(251,146,60,.7) 40%,rgba(168,85,247,.35) 70%,transparent 100%);
+  animation:tpart-fade 1.4s ease-out forwards}
+@keyframes tpart-fade{from{opacity:.9;transform:scale(1)}to{opacity:0;transform:scale(.15)}}
+/* дым выхлопа — расширяется и сносится назад */
+.smoke{position:fixed;border-radius:50%;pointer-events:none;z-index:3;filter:blur(3px);
+  background:radial-gradient(circle,rgba(210,195,255,.5) 0%,rgba(150,125,205,.3) 45%,transparent 72%);
+  animation:smoke-puff 1.7s ease-out forwards}
+@keyframes smoke-puff{0%{opacity:.7;transform:translate(0,0) scale(.4)}100%{opacity:0;transform:translate(var(--sdx,0),var(--sdy,0)) scale(2.6)}}
+/* искры — мелкие, яркие, разлетаются */
+.spark{position:fixed;border-radius:50%;pointer-events:none;z-index:6;
+  background:radial-gradient(circle,#fff 0%,#FDE68A 45%,#FB923C 80%,transparent 100%);
+  box-shadow:0 0 8px #FDE68A;animation:spark-fly .6s ease-out forwards}
+@keyframes spark-fly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--vx,0),var(--vy,0)) scale(.15)}}
+body.rumble .deck{animation:screen-rumble .07s linear infinite}
+@keyframes screen-rumble{0%{transform:translate(0,0)}25%{transform:translate(3px,-2px)}50%{transform:translate(-3px,3px)}75%{transform:translate(2px,2px)}100%{transform:translate(-2px,-3px)}}
+.final.dragged .final-pill{animation:drag-away .9s cubic-bezier(.6,0,.85,1) .15s forwards}
+.final.dragged .final-title{animation:drag-away 1.0s cubic-bezier(.6,0,.85,1) .25s forwards}
+.final.dragged .final-gif{animation:drag-away .9s cubic-bezier(.6,0,.85,1) .35s forwards}
+@keyframes drag-away{to{transform:translate(140vw,-140vh) rotate(35deg);opacity:0}}
+.particle{position:absolute;border-radius:50%;opacity:0;pointer-events:none}
+.slide.active .particle{animation:rise 7s linear infinite}
+@keyframes rise{0%{opacity:0;transform:translateY(20px) scale(.3) rotate(0deg)}10%{opacity:.9}100%{opacity:0;transform:translateY(-110vh) scale(1) rotate(360deg)}}
+
+/* ===== NAV ===== */
+.nav{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:6px;background:rgba(5,0,21,.6);backdrop-filter:blur(24px);border:1px solid var(--glass-border);padding:8px 10px;border-radius:99px;z-index:1000;box-shadow:0 16px 50px rgba(0,0,0,.4)}
+.nav button{appearance:none;border:0;background:rgba(255,255,255,.05);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease);cursor:pointer}
+.nav button:hover{background:rgba(255,255,255,.18)}
+.nav .counter{font-family:var(--f-mono);font-size:12px;letter-spacing:1.5px;min-width:80px;text-align:center;color:#fff;font-weight:500;padding:0 10px}
+.nav .counter b{color:var(--mint);font-weight:700}
+.nav .counter span{color:rgba(255,255,255,.5)}
+
+.indicators{position:fixed;right:24px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:4px;z-index:999;max-height:80vh;overflow:hidden}
+.indicators i{display:block;width:4px;height:4px;border-radius:99px;background:rgba(255,255,255,.2);transition:all .4s var(--ease);cursor:pointer;flex-shrink:0}
+.indicators i.active{background:var(--mint);width:4px;height:14px;box-shadow:0 0 12px var(--mint)}
+
+.kbd-hint{position:fixed;bottom:28px;right:32px;z-index:99;display:none;align-items:center;gap:10px;font-family:var(--f-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.45);text-transform:uppercase}
+.kbd-hint kbd{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;background:rgba(255,255,255,.06);border:1px solid var(--glass-border);border-radius:6px;font-family:var(--f-mono);font-size:11px;color:#fff}
+
+@media (max-width:900px){
+  .versus.two,.versus.three{grid-template-columns:1fr}
+  .vglyph{display:none}
+  .photo-grid.cols2,.photo-grid.cols3{grid-template-columns:1fr}
+  .photo-card.tall{grid-row:auto;min-height:280px}
+  .photo-card.tall img{min-height:280px}
+  .profile{flex-direction:column;text-align:center;gap:30px}
+  .indicators,.kbd-hint,.top-meta,.top-brand{display:none}
+  .body-area{max-width:100%}
+  .orbit{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01s!important}
+}
+
+/* ===== MISSION / CHAPTERS ===== */
+:root{--accent:#A855F7}
+.progress{background:var(--accent);box-shadow:0 0 16px var(--accent)}
+.pill::before{background:var(--accent);box-shadow:0 0 10px var(--accent)}
+.crew{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:6vh}
+.crew-card{width:172px;border-radius:24px;overflow:hidden;background:var(--glass-bg);border:1px solid var(--glass-border);backdrop-filter:blur(16px);text-align:center;padding-bottom:16px;animation:crew-float 5s ease-in-out infinite}
+.crew-card:nth-child(1){animation-duration:5.4s;animation-delay:-.2s}
+.crew-card:nth-child(2){animation-duration:6.1s;animation-delay:-1.6s}
+.crew-card:nth-child(3){animation-duration:5.7s;animation-delay:-3.1s}
+.crew-card:nth-child(4){animation-duration:6.4s;animation-delay:-.9s}
+.crew-card:nth-child(5){animation-duration:5.2s;animation-delay:-2.3s}
+@keyframes crew-float{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-10px) rotate(-1.2deg)}50%{transform:translateY(4px) rotate(0deg)}75%{transform:translateY(-6px) rotate(1.2deg)}}
+.crew-card img{width:100%;height:180px;object-fit:cover;display:block}
+.crew-card .nm{font-family:var(--f-display);font-weight:700;font-size:17px;margin-top:12px;color:#fff}
+.crew-card .role{font-family:var(--f-mono);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:4px}
+.crew-card .chip{display:inline-block;width:26px;height:4px;border-radius:2px;margin-top:10px}
+.ch-intro{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:22px;width:100%;height:100%}
+.ch-num{font-family:var(--f-mono);font-size:12px;letter-spacing:5px;color:var(--accent);text-transform:uppercase}
+.ch-photo{width:240px;height:240px;border-radius:50%;overflow:hidden;border:3px solid var(--accent);box-shadow:0 0 70px var(--accent);animation:bob 4s ease-in-out infinite}
+.ch-photo img{width:100%;height:100%;object-fit:cover}
+.ch-name{font-family:var(--f-display);font-size:clamp(56px,9vw,140px);font-weight:800;letter-spacing:-4px;line-height:.9;background:linear-gradient(120deg,#fff 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.ch-sub{font-family:var(--f-mono);font-size:12px;letter-spacing:3px;color:rgba(255,255,255,.55);text-transform:uppercase}
+.ch-nick{font-family:var(--f-mono);font-size:22px;letter-spacing:4px;color:var(--mint);text-shadow:0 0 18px rgba(101,224,196,.5)}
+.ch-nick .typing{border-right:2px solid var(--mint);padding-right:4px;animation:caret 1s step-end infinite}
+.ph-box{border:2px dashed rgba(255,255,255,.25);border-radius:24px;min-height:340px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:rgba(255,255,255,.45);font-family:var(--f-mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;background:rgba(255,255,255,.03)}
+.ph-box .big{font-size:46px;opacity:.65}
+
+/* ===== SECTOR BACKGROUNDS / WARP ===== */
+.tint{position:fixed;inset:-10%;z-index:-2;pointer-events:none;opacity:0;transition:opacity 1.8s var(--ease);mix-blend-mode:screen;filter:blur(30px);animation:tint-drift 26s ease-in-out infinite alternate}
+.tint:nth-of-type(2){animation-delay:-13s}
+@keyframes tint-drift{0%{transform:translate(0,0) scale(1) rotate(0deg)}33%{transform:translate(-5%,3%) scale(1.12) rotate(2deg)}66%{transform:translate(4%,-4%) scale(1.06) rotate(-2deg)}100%{transform:translate(-2%,5%) scale(1.1) rotate(1deg)}}
+.tint.on{opacity:1}
+.stage,.aurora{transition:filter 1.8s var(--ease)}
+/* ===== СМЕНА СПИКЕРА: облёт камеры (звёзды и орбы — в JS) ===== */
+/* вспышка гиперпрыжка акцентным цветом */
+.warpfx{position:fixed;inset:0;pointer-events:none;z-index:60;opacity:0}
+.warpflash{background:radial-gradient(circle at 50% 50%, var(--accent) 0%, transparent 62%);mix-blend-mode:screen}
+body.warping .warpflash{animation:warp-flash 1.2s ease-out}
+@keyframes warp-flash{0%{opacity:0}10%{opacity:.42}100%{opacity:0}}
+/* ударная волна из центра */
+.shockwave{position:fixed;top:50%;left:50%;width:36px;height:36px;border-radius:50%;border:2px solid var(--accent);box-shadow:0 0 50px var(--accent);transform:translate(-50%,-50%) scale(0);opacity:0;z-index:61;pointer-events:none}
+body.warping .shockwave{animation:shock 1.1s ease-out}
+@keyframes shock{0%{transform:translate(-50%,-50%) scale(0);opacity:.65}100%{transform:translate(-50%,-50%) scale(32);opacity:0}}
+/* прилёт спикера из глубокого космоса */
+.slide.active .ch-photo{animation:bob 4s ease-in-out infinite, photo-warpin 1.15s cubic-bezier(.16,1,.3,1)}
+@keyframes photo-warpin{0%{transform:scale(.08);filter:blur(20px)}55%{filter:blur(0)}100%{transform:scale(1);filter:blur(0)}}
+.slide.active .ch-name{animation:name-warpin 1.2s cubic-bezier(.16,1,.3,1)}
+@keyframes name-warpin{0%{opacity:0;transform:perspective(900px) translateZ(-560px) scale(1.5);filter:blur(12px)}100%{opacity:1;transform:perspective(900px) translateZ(0) scale(1);filter:blur(0)}}
+</style>
+</head>
+<body>
+
+<div class="stage" id="stage">
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+  <div class="orb d"></div>
+</div>
+<div class="tint" id="tintA"></div>
+<div class="tint" id="tintB"></div>
+<div class="aurora"></div>
+<canvas id="starCanvas"></canvas>
+<div class="warpfx warpflash" id="warpFlash"></div>
+<div class="shockwave" id="shockWave"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<div class="top-brand" id="topBrand">бассейн · школа 21</div>
+<div class="top-meta"><span class="dot-live"></span><span>live</span><span class="clock" id="clock">--:--</span></div>
+<div class="progress" id="progress"></div>
+<div class="indicators" id="indicators"></div>
+
+<div class="deck" id="deck">
+
+  <!-- 0. MISSION COVER -->
+  <section class="slide" data-accent="#A855F7">
+    <div class="cover-wrap">
+      <div class="halo"></div>
+      <div class="orbit o1"><span class="sat"></span></div>
+      <div class="orbit o2"><span class="sat"></span></div>
+      <div class="final-pill reveal r1">школа 21 · как мы проходили бассейн · 5 историй</div>
+      <h1 class="cover-title split" style="font-size:clamp(54px,9vw,150px);letter-spacing:-4px">ИСПОВЕДЬ</h1>
+      <div class="crew reveal r4">
+        <div class="crew-card"><img src="speakers/nikita.jpg" alt="" style="object-position:center top;margin-top:-10px"><div class="nm">Никита</div><div class="role">norikogu</div><span class="chip" style="background:#65E0C4"></span></div>
+        <div class="crew-card"><img src="speakers/sonya.jpg" alt=""><div class="nm">Соня</div><div class="role">annmarma</div><span class="chip" style="background:#FB7185"></span></div>
+        <div class="crew-card"><img src="speakers/denis.jpg" alt=""><div class="nm">Денис</div><div class="role">nieshays</div><span class="chip" style="background:#FBBF24"></span></div>
+        <div class="crew-card"><img src="speakers/tanya.jpg" alt="" style="object-position:center 20%"><div class="nm">Таня</div><div class="role">varyseli</div><span class="chip" style="background:#60A5FA"></span></div>
+        <div class="crew-card me"><img src="speakers/me.jpg" alt="" style="object-position:right center"><div class="nm">Денис</div><div class="role">odessabu</div><span class="chip" style="background:#A855F7"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ГЛАВА 1: Никита -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="ch-intro">
+      <div class="halo"></div>
+      <div class="ch-photo reveal r2"><img src="speakers/nikita.jpg" alt="Никита" style="object-position:center calc(50% - 15px)"></div>
+      <h1 class="ch-name reveal r3">НИКИТА</h1>
+      <div class="ch-nick reveal r4" id="nick1" data-nick="norikogu">​<span class="typing"></span></div>
+    </div>
+  </section>
+  <!-- НИКИТА slide3: Кто я? -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Кто</span> <span class="w"><em>я?</em></span></span></h2>
+      <p class="subtitle reveal r3">Frontend developer · Ментор в «IT-академия Lad»</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r4" style="height:440px;width:auto"><img src="images/nikita-lad.jpg" alt="" style="height:440px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- НИКИТА slide4: За 4 года до бассейна -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">За</span> <span class="w">4</span> <span class="w">года</span> <span class="w"><em>до бассейна</em></span></span></h2>
+      <p class="subtitle reveal r3">10 лет в продажах и бесконечное выгорание · смена профессии, рождение сына · обучение 24/7</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r4" style="height:480px;width:auto"><img src="images/nikita-burnout.png" alt="" style="height:480px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- НИКИТА slide5: Как я попал на бассейн? -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Как</span> <span class="w">я</span> <span class="w">попал</span> <span class="w"><em>на бассейн?</em></span></span></h2>
+      <p class="subtitle reveal r3">Спасибо, Валера ))</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r4" style="height:560px;width:auto"><img src="images/nikita-howcame.png" alt="" style="height:560px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- НИКИТА slide6: Как проходил мой бассейн? Первая неделя -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Первая неделя</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Как</span> <span class="w">проходил</span> <span class="w"><em>мой бассейн?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r3" style="height:520px;width:auto"><img src="images/nikita-week1.png" alt="" style="height:520px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- НИКИТА slide7: Как проходил мой бассейн? Вторая неделя -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Вторая неделя</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Как</span> <span class="w">проходил</span> <span class="w"><em>мой бассейн?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r3" style="height:520px;width:auto"><img src="images/nikita-week2.png" alt="" style="height:520px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- НИКИТА slide8: Но что я получил в итоге? -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Но</span> <span class="w">что</span> <span class="w">я</span> <span class="w"><em>получил в итоге?</em></span></span></h2>
+      <p class="subtitle reveal r3">Новую прайм-версию себя · друзей и новые знакомства</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r3" style="height:330px;width:auto"><img src="images/nikita-elevator.jpg" alt="" style="height:330px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:330px;width:auto"><img src="images/nikita-table.jpg" alt="" style="height:330px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:330px;width:auto"><img src="images/nikita-pizza.jpg" alt="" style="height:330px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- НИКИТА slide9: Мем про меня -->
+  <section class="slide" data-accent="#65E0C4">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Мем</span> <span class="w"><em>про меня</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:1vh">
+        <div class="photo-card drift1 reveal r3" style="height:560px;width:auto"><img src="images/nikita-meme.png" alt="" style="height:560px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- ГЛАВА 2: Денис -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="ch-intro">
+      <div class="halo"></div>
+      <div class="ch-photo reveal r2"><img src="speakers/denis.jpg" alt="Денис"></div>
+      <h1 class="ch-name reveal r3">ДЕНИС</h1>
+      <div class="ch-nick reveal r4" id="nick3" data-nick="nieshays">​<span class="typing"></span></div>
+    </div>
+  </section>
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">О себе</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Кто</span> <span class="w">я</span> <span class="w"><em>был до бассейна</em></span></span></h2>
+      <p class="subtitle reveal r3">СПО — оператор ЧПУ, незаконченное высшее, ноль опыта в программировании.</p>
+    </div>
+    <div class="body-area">
+      <div class="versus trio">
+        <div class="glass vcard path float reveal r4">
+          <div class="vico">🎓</div>
+          <h3>Образование</h3>
+          <p>Среднее профессиональное (оператор ЧПУ) + незаконченное высшее</p>
+        </div>
+        <div class="glass vcard result float f2 reveal r6">
+          <div class="vico">🏖</div>
+          <h3>Бассейн</h3>
+          <p>Проходил во время отпуска на работе</p>
+        </div>
+        <div class="glass vcard people float f3 glow-ring reveal r8">
+          <span class="ring"></span>
+          <div class="vico">🙈</div>
+          <h3>Социофоб</h3>
+          <p>Опыта в программировании не было — и был социофобом до школы</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide4: Как я узнал про школу?? -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Начало пути</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Как</span> <span class="w">я</span> <span class="w">узнал</span> <span class="w"><em>про школу?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="banner square reveal r3"><img src="images/den-s4-meme.png" alt="" style="animation:none"></div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide5: Начало моего пути -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Старт</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Начало</span> <span class="w">моего</span> <span class="w"><em>пути</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:250px;width:auto"><img src="images/den-s5-classroom.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:250px;width:auto"><img src="images/den-cat21.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:250px;width:auto"><img src="images/den-drawing.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide6: ПЕРВЫЕ ПРОЕКТЫ -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Неделя 1</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Первые</span> <span class="w"><em>проекты</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:380px;width:auto"><img src="images/den-meme-confused.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:380px;width:auto"><img src="images/den-meme-math.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide7: 1 неделя -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">1 неделя</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">1</span> <span class="w"><em>неделя</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:226px;display:inline-flex;align-items:center;justify-content:center"><img src="images/den-s7-stickies.jpeg" alt="" style="width:300px;height:auto;max-width:none;object-fit:contain;animation:none;transform:rotate(90deg)"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto;display:inline-block"><img src="images/den-s7-heart21.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto;display:inline-block"><img src="images/den-s7-drawing.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:300px;width:auto;display:inline-block"><img src="images/den-group1.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide8: Знакомство с Вертером -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Это вертер</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Знакомство</span> <span class="w"><em>с Вертером</em></span></span></h2>
+      <p class="subtitle reveal r3">Это вертер. А это я.</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:380px;width:auto"><img src="images/den-meme-laugh.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:380px;width:auto"><img src="images/den-meme-crykid.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide9: Экзамены -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Экзамены</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Неудача</span> <span class="w"><em>за неудачей</em></span></span></h2>
+      <p class="subtitle reveal r3">0 очков опыта, 0% — и так не раз.</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:230px;width:auto"><img src="images/den-fail1.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:230px;width:auto"><img src="images/den-meme-cry.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:230px;width:auto"><img src="images/den-fail2.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide10: Групповые проекты -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Команда</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Групповые</span> <span class="w"><em>проекты</em></span></span></h2>
+      <p class="subtitle reveal r3">Сначала провал — а потом задание выполнено на 100%.</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:250px;width:auto"><img src="images/den-fail3.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:250px;width:auto"><img src="images/den-success.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:250px;width:auto"><img src="images/den-meme-pepe.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:250px;width:auto"><img src="images/den-meme-tonystark.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide11: Что же мне помогло? -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Поддержка</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Что</span> <span class="w">же</span> <span class="w">мне</span> <span class="w"><em>помогло?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/den-team.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/den-s11-stairs.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/den-s11-office.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide12: Да, было..... -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Бывало и так</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Да,</span> <span class="w"><em>было…</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:2vh">
+        <div class="photo-card drift2 reveal r3" style="height:280px;width:auto"><img src="images/den-meme-button.jpeg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r4" style="height:280px;width:auto"><img src="images/den-meme-finish.jpeg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+      <div style="display:flex;justify-content:center;margin-top:18px">
+        <div class="photo-card drift1 reveal r5" style="height:180px;width:auto"><img src="images/den-s12-git.jpeg" alt="" style="height:180px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide13: Атмосфера февральского бассейна -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Атмосфера</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Атмосфера</span> <span class="w"><em>февральского бассейна</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:380px;width:auto"><img src="images/den-s13-popov.jpeg" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:380px;width:auto"><img src="images/den-building21.jpeg" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide14: Небольшая статистика по моему бассейну -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Статистика</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Небольшая</span> <span class="w">статистика</span> <span class="w"><em>по бассейну</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:230px;width:auto"><img src="images/den-weektracker.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:230px;width:auto"><img src="images/den-logtime1.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:230px;width:auto"><img src="images/den-logtime2.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:230px;width:auto"><img src="images/den-s14-charlie.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide15: Далее ожидание... -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Ожидание</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Далее</span> <span class="w"><em>ожидание...</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="banner square reveal r3"><img src="images/den-s15-cry.png" alt="" style="animation:none;max-height:calc(75vh - 90px);max-width:95%"></div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide16: Долгожданное письмо -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Письмо</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Долгожданное</span> <span class="w"><em>письмо</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="banner square reveal r3"><img src="images/den-letter.png" alt="" style="animation:none;max-height:calc(75vh - 90px);max-width:95%"></div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide17: Взяли? Серьезно? -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Взяли? Серьёзно?</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Взяли?</span> <span class="w"><em>Серьёзно?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="banner square reveal r3"><img src="images/den-s17-grin.png" alt="" style="animation:none;max-height:400px"></div>
+    </div>
+  </section>
+
+  <!-- ДЕНИС slide18: Спасибо за внимание!!! -->
+  <section class="slide" data-accent="#FBBF24">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Денис</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Спасибо</span> <span class="w">за</span> <span class="w"><em>внимание!</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="banner square reveal r3"><img src="images/den-s18-catmic.png" alt="" style="animation:none;max-height:400px"></div>
+    </div>
+  </section>
+  <!-- ГЛАВА 3: Таня -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="ch-intro">
+      <div class="halo"></div>
+      <div class="ch-photo reveal r2"><img src="speakers/tanya.jpg" alt="Таня" style="object-position:center 10%"></div>
+      <h1 class="ch-name reveal r3">ТАНЯ</h1>
+      <div class="ch-nick reveal r4" id="nick4" data-nick="varyseli">​<span class="typing"></span></div>
+    </div>
+  </section>
+  <!-- ТАНЯ slide3: 3 факта обо мне -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">3 факта обо мне</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Гуманитарий</span> <span class="w">до</span> <span class="w"><em>мозга костей</em></span></span></h2>
+      <p class="subtitle reveal r3">Закончила ин-яз. Пеку тортики.</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/tanya-meme-translator.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/tanya-cat-baker.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide4: Первый день -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Старт</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Первый</span> <span class="w"><em>день</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:250px;width:auto"><img src="images/tanya-s4-laptop.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:250px;width:auto"><img src="images/tanya-meme-dog.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:250px;width:auto"><img src="images/tanya-s4-spongebob.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:250px;width:auto"><img src="images/tanya-cat-laptop.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide5: Первый проект -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Неделя 1</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Первый</span> <span class="w"><em>проект</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:390px;width:auto"><img src="images/tanya-s5-board.png" alt="" style="height:390px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:390px;width:auto"><img src="images/tanya-meme-cdup.jpeg" alt="" style="height:390px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide6: Пошло-поехало... -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Пошло-поехало…</span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:260px;width:auto"><img src="images/tanya-s6-snowcity.jpeg" alt="" style="height:260px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:260px;width:auto"><img src="images/tanya-s6-elevator.jpeg" alt="" style="height:260px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:260px;width:auto"><img src="images/tanya-meme-wakeup.jpeg" alt="" style="height:260px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:260px;width:auto"><img src="images/tanya-cat-onesie.png" alt="" style="height:260px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r6" style="height:260px;width:auto"><img src="images/tanya-meme-deer.jpeg" alt="" style="height:260px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide7: Терпи -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Держись,</span> <span class="w"><em>не сдавайся</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:280px;width:auto"><img src="images/tanya-meme-terpi.jpeg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:280px;width:auto"><img src="images/tanya-meme-verter.jpeg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:280px;width:auto"><img src="images/tanya-meme-dogphone.png" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide8: Я программист! -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Я</span> <span class="w"><em>программист!</em></span></span></h2>
+      <p class="subtitle reveal r3">Делаю на компьютере клац, клац, клац.</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:390px;width:auto"><img src="images/tanya-s8-whiteboards.jpeg" alt="" style="height:390px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:390px;width:auto"><img src="images/tanya-board-programmer.jpeg" alt="" style="height:390px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:390px;width:auto"><img src="images/tanya-s8-monkeyphone.jpeg" alt="" style="height:390px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide9: Первый экзамен -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Первый</span> <span class="w"><em>экзамен</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/tanya-meme-hideexam.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/tanya-cat-glasses.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/tanya-meme-catcry.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide10: Групповые проекты -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Групповые</span> <span class="w"><em>проекты</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:340px;width:auto"><img src="images/tanya-meme-valgrind.jpeg" alt="" style="height:340px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:340px;width:auto"><img src="images/tanya-cat-coffee.png" alt="" style="height:340px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:340px;width:auto"><img src="images/tanya-meme-garden.jpeg" alt="" style="height:340px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide11: Были и косяки... -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Были</span> <span class="w">и</span> <span class="w"><em>косяки…</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:250px;width:auto"><img src="images/tanya-s11-cabinet.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:250px;width:auto"><img src="images/tanya-s11-office.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:250px;width:auto"><img src="images/tanya-meme-enot.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:250px;width:auto"><img src="images/tanya-meme-bottlecat.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide12: С зеленым до конца -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">С</span> <span class="w">зелёным</span> <span class="w"><em>до конца</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/tanya-s12-wristband.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/tanya-s12-friends.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/tanya-cat-wine.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide13: Команда -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Бассейновая</span> <span class="w"><em>семья</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:230px;width:auto"><img src="images/tanya-s13-duo.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:230px;width:auto"><img src="images/tanya-s13-group.jpeg" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:230px;width:auto"><img src="images/tanya-s13-drink.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:230px;width:auto"><img src="images/tanya-s13-tablegroup.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r6" style="height:230px;width:auto"><img src="images/tanya-cat-book.png" alt="" style="height:230px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide14: Праздники -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Праздники</span> <span class="w">и</span> <span class="w"><em>тёплая компания</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:250px;width:auto"><img src="images/tanya-s14-cards.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:250px;width:auto"><img src="images/tanya-s14-bigtable.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:250px;width:auto"><img src="images/tanya-s14-screen.jpeg" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:250px;width:auto"><img src="images/tanya-cat-cake.png" alt="" style="height:250px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide15: Родной бассейн -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Родной</span> <span class="w"><em>бассейн</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/tanya-s15-group.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/tanya-cat-heart.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/tanya-cat-hamster.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide16: Да, было... -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:380px;width:auto"><img src="images/tanya-s16-monitor.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:380px;width:auto"><img src="images/tanya-s16-lamp.jpeg" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:380px;width:auto"><img src="images/tanya-s16-collage.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r6" style="height:380px;width:auto"><img src="images/tanya-cat-duck.png" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТАНЯ slide17: Возьмите от интенсива максимум -->
+  <section class="slide" data-accent="#60A5FA">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Совет</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">«Возьмите</span> <span class="w">от</span> <span class="w">интенсива</span> <span class="w"><em>максимум»</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:4vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/tanya-s17-postits.jpeg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/tanya-cat-five.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/tanya-cat-cry2.png" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ГЛАВА 4: Соня -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="ch-intro">
+      <div class="halo"></div>
+      <div class="ch-photo reveal r2"><img src="speakers/sonya.jpg" alt="Соня"></div>
+      <h1 class="ch-name reveal r3">СОНЯ</h1>
+      <div class="ch-nick reveal r4" id="nick2" data-nick="annmarma">​<span class="typing"></span></div>
+    </div>
+  </section>
+  <!-- СОНЯ slide2: Зачем я пришла на бассейн? -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Зачем</span> <span class="w">я</span> <span class="w">пришла</span> <span class="w"><em>на бассейн?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:380px;width:auto"><img src="images/sonya-cat-happy.jpg" alt="" style="height:380px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- СОНЯ slide3: В первый день бассейна -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">В</span> <span class="w">первый</span> <span class="w"><em>день бассейна</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:330px;width:auto"><img src="images/sonya-cat-sad.jpg" alt="" style="height:330px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:330px;width:auto"><img src="images/sonya-cat-dizzy.jpg" alt="" style="height:330px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:330px;width:auto"><img src="images/sonya-cat-facepalm.jpg" alt="" style="height:330px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- СОНЯ slide4: Мои проекты -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Мои</span> <span class="w"><em>проекты</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:340px;width:auto"><img src="images/sonya-projects1.png" alt="" style="height:340px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/sonya-cat-thinking.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- СОНЯ slide5: Мероприятия -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w"><em>Мероприятия</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/sonya-event1.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/sonya-event2.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/sonya-event3.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- СОНЯ slide6: Мероприятия (2) -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="head">
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w"><em>Мероприятия</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:16px;margin-top:2vh">
+        <div class="photo-card drift1 reveal r3" style="height:300px;width:auto"><img src="images/sonya-event4.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:300px;width:auto"><img src="images/sonya-event5.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/sonya-event6.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- СОНЯ slide7: (без заголовка) тяжёлые моменты -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px">
+        <div class="photo-card drift1 reveal r3" style="height:280px;width:auto"><img src="images/sonya-cat-cry.jpg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift2 reveal r4" style="height:280px;width:auto"><img src="images/sonya-cat-worthless.jpg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:280px;width:auto"><img src="images/sonya-cat-scribble.jpg" alt="" style="height:280px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- СОНЯ slide8: (без заголовка) письмо о зачислении -->
+  <section class="slide" data-accent="#FB7185">
+    <div class="body-area">
+      <div style="display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px">
+        <div class="photo-card drift2 reveal r3" style="height:300px;width:auto"><img src="images/sonya-cat-thumbsup.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift1 reveal r4" style="height:420px;width:auto"><img src="images/sonya-letter.png" alt="" style="height:420px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+        <div class="photo-card drift3 reveal r5" style="height:300px;width:auto"><img src="images/sonya-cat-peace.jpg" alt="" style="height:300px;width:auto;max-width:100%;object-fit:contain;animation:none"></div>
+      </div>
+    </div>
+  </section>
+  <!-- ГЛАВА 5: Денис -->
+  <section class="slide" data-accent="#A855F7">
+    <div class="ch-intro">
+      <div class="halo"></div>
+      <div class="ch-photo reveal r2"><img src="speakers/me.jpg" alt="Денис" style="object-position:calc(50% - 30px) center"></div>
+      <h1 class="ch-name reveal r3">ДЕНИС</h1>
+      <div class="ch-nick reveal r4" id="nick5" data-nick="odessabu">​<span class="typing"></span></div>
+    </div>
+  </section>
+
+
+  <!-- 3. ЧТО ВАЖНЕЕ #1 -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Главный вопрос</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Что</span> <span class="w"><em>важнее</em></span><span class="w">?</span></span></h2>
+      <p class="subtitle reveal r3">Вопрос, который я задавал себе перед бассейном — и который определит весь рассказ.</p>
+    </div>
+    <div class="body-area">
+      <div class="versus two">
+        <div class="glass vcard path float reveal r4">
+          <div class="vico">🧭</div>
+          <h3>Путь</h3>
+          <p>Процесс, опыт, то, через что проходишь день за днём</p>
+        </div>
+        <div class="vglyph reveal r5">VS</div>
+        <div class="glass vcard result float f2 reveal r6">
+          <div class="vico">🏆</div>
+          <h3>Результат</h3>
+          <p>Финальная точка, цель, то, ради чего всё затевается</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. ЗА 4 ГОДА ДО БАССЕЙНА -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Точка отсчёта</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">За</span> <span class="w">4</span> <span class="w">года</span> <span class="w"><em>до бассейна</em></span></span></h2>
+      <p class="subtitle reveal r3">Где я был, прежде чем эта история вообще началась.</p>
+    </div>
+    <div class="body-area">
+      <div class="photo-grid cols3" style="max-width:1080px;margin-left:auto;margin-right:auto">
+        <div class="photo-card drift1 reveal r3" style="grid-row:span 1;height:450px"><img src="images/image4.jpeg" alt="" style="height:450px"><span class="tag">тогда</span></div>
+        <div class="photo-card drift2 reveal r4" style="height:450px"><img src="images/image6.jpg" alt="" style="height:450px"></div>
+        <div class="photo-card drift3 reveal r5" style="height:450px"><img src="images/image5.jpeg" alt="" style="height:450px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ЦЕЛИ ПЕРЕД БАССЕЙНОМ -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Ожидания</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Мои</span> <span class="w">цели</span> <span class="w"><em>перед бассейном</em></span></span></h2>
+      <p class="subtitle reveal r3">С чем я заходил в эти недели — план, который казался очевидным.</p>
+    </div>
+    <div class="body-area">
+      <div class="versus two">
+        <div class="glass vcard float reveal r4" style="--c:var(--mint)">
+          <div class="vico" style="background:var(--grad-cool)">💻</div>
+          <h3>IT</h3>
+          <p>Новая профессия, новый старт, новая среда</p>
+        </div>
+        <div class="vglyph reveal r5">→</div>
+        <div class="glass vcard float f2 reveal r6" style="--c:var(--amber)">
+          <div class="vico" style="background:linear-gradient(120deg,#FBBF24,#FB7185)">💰</div>
+          <h3>Деньги</h3>
+          <p>Хочу зарабатывать много — это была главная цель</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. НО ПОЛУЧИЛ НАМНОГО БОЛЬШЕ -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Поворот</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Но</span> <span class="w">я</span> <span class="w">получил</span> <span class="w"><em>намного больше</em></span></span></h2>
+      <p class="subtitle reveal r3">План был одним. Реальность — совсем другим.</p>
+    </div>
+    <div class="body-area">
+      <div style="display:flex;justify-content:center">
+        <div class="vico float reveal r4" style="background:var(--grad-brand);font-size:140px;width:260px;height:300px;border-radius:48px;box-shadow:0 30px 90px rgba(168,85,247,.45);display:flex;align-items:center;justify-content:center">❓</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. ПЕРВЫЙ ДЕНЬ -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">День 0</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">В</span> <span class="w">первый</span> <span class="w">день</span> <span class="w"><em>бассейна</em></span></span></h2>
+      <p class="subtitle reveal r3">Новое место, новые лица, новый отсчёт времени.</p>
+    </div>
+    <div class="body-area">
+      <div class="photo-grid cols2" style="max-width:760px;margin-left:auto;margin-right:auto">
+        <div class="photo-card reveal r3"><img src="images/image9.jpg" alt=""></div>
+        <div class="photo-card reveal r4"><img src="images/image10.jpg" alt=""></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. НЕДЕЛЯ 1 -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Мои успехи</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Как</span> <span class="w">прошёл</span> <span class="w">бассейн</span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="banner square reveal r3"><img src="images/image11.png" alt=""></div>
+    </div>
+  </section>
+
+  <!-- 10. ИТОГ -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Итог</span></div>
+      <h2 class="title compact reveal r2"><span class="title-words"><span class="w">Но</span> <span class="w">что</span> <span class="w">я</span> <span class="w">получил</span> <span class="w"><em>в итоге?</em></span></span></h2>
+    </div>
+    <div class="body-area">
+      <div class="photo-grid cols3" style="max-width:1080px;margin-left:auto;margin-right:auto">
+        <div class="photo-card drift1 reveal r3" style="height:400px"><img src="images/image14.jpeg" alt="" style="height:400px"><span class="tag">итог</span></div>
+        <div class="photo-card drift2 reveal r4" style="height:400px"><img src="images/image16.jpeg" alt="" style="height:400px"></div>
+        <div class="photo-card drift3 reveal r5" style="height:400px"><img src="images/image15.jpeg" alt="" style="height:400px"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. ЧТО ВАЖНЕЕ #2 -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Возвращаясь к вопросу</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Что</span> <span class="w"><em>важнее</em></span><span class="w">?</span></span></h2>
+      <p class="subtitle reveal r3">Теперь, пройдя путь, я смотрю на эти два слова иначе.</p>
+    </div>
+    <div class="body-area">
+      <div class="versus two">
+        <div class="glass vcard path float reveal r4">
+          <div class="vico">🧭</div>
+          <h3>Путь</h3>
+          <p>Каждый день, каждая ошибка, каждый разговор — и есть настоящий опыт</p>
+        </div>
+        <div class="vglyph reveal r5">VS</div>
+        <div class="glass vcard result float f2 reveal r6">
+          <div class="vico">🏆</div>
+          <h3>Результат</h3>
+          <p>Точка на карте, которая важна — но не объясняет, кем ты стал по дороге</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. ЛЮДИ -->
+  <section class="slide">
+    <div class="head">
+      <div class="reveal r1"><span class="pill">Финальная формула</span></div>
+      <h2 class="title reveal r2"><span class="title-words"><span class="w">Что</span> <span class="w"><em>важнее</em></span><span class="w">?</span></span></h2>
+      <p class="subtitle reveal r3">Третий элемент, который перевешивает оба первых.</p>
+    </div>
+    <div class="body-area">
+      <div class="versus trio">
+        <div class="glass vcard path float reveal r4">
+          <div class="vico">🧭</div>
+          <h3>Путь</h3>
+          <p>Опыт и процесс</p>
+        </div>
+        <div class="glass vcard result float f2 reveal r6">
+          <div class="vico">🏆</div>
+          <h3>Результат</h3>
+          <p>Цель и финиш</p>
+        </div>
+        <div class="glass vcard people float f3 glow-ring reveal r8">
+          <span class="ring"></span>
+          <div class="vico">🤝</div>
+          <h3>Люди</h3>
+          <p>То, что остаётся, когда всё остальное забывается</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. FINAL -->
+  <section class="slide" id="finalSlide">
+    <div class="final" id="finalScene">
+      <div class="halo"></div>
+      <div class="final-pill reveal r1">конец</div>
+      <h1 class="final-title reveal r2"><span class="w">ИСПОВЕДЬ</span></h1>
+      <div class="final-gif reveal r3"><img src="images/image17.gif" alt=""></div>
+      <div class="rocket" id="rocket">
+        <svg class="rocket-svg" viewBox="0 0 260 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="rkBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FFFFFF"/><stop offset=".55" stop-color="#D8DCE8"/><stop offset="1" stop-color="#8E96AC"/>
+            </linearGradient>
+            <linearGradient id="rkNose" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#A855F7"/><stop offset="1" stop-color="#6D28D9"/>
+            </linearGradient>
+            <radialGradient id="rkFlame" cx="1" cy=".5" r="1">
+              <stop offset="0" stop-color="#FFFFFF"/><stop offset=".3" stop-color="#FDE68A"/><stop offset=".65" stop-color="#FB923C"/><stop offset="1" stop-color="rgba(239,68,68,0)"/>
+            </radialGradient>
+          </defs>
+          <g class="svg-flame">
+            <ellipse cx="28" cy="50" rx="34" ry="14" fill="url(#rkFlame)" opacity=".85"/>
+            <ellipse cx="42" cy="50" rx="20" ry="8" fill="#FDE68A"/>
+            <ellipse cx="50" cy="50" rx="10" ry="4.5" fill="#FFFFFF"/>
+          </g>
+          <path d="M68 30 L40 8 Q70 16 84 24 Z" fill="#FB7185"/>
+          <path d="M68 70 L40 92 Q70 84 84 76 Z" fill="#E11D48"/>
+          <rect x="58" y="38" width="12" height="24" rx="4" fill="#6B7280"/>
+          <path d="M66 50 Q66 24 104 19 L172 19 Q216 33 234 50 Q216 67 172 81 L104 81 Q66 76 66 50 Z" fill="url(#rkBody)"/>
+          <path d="M172 19 Q216 33 234 50 Q216 67 172 81 Q186 66 186 50 Q186 34 172 19 Z" fill="url(#rkNose)"/>
+          <circle cx="142" cy="50" r="15" fill="#0B0224"/>
+          <circle cx="142" cy="50" r="11" fill="#65E0C4"/>
+          <circle cx="146" cy="46" r="4" fill="#EAFFF9" opacity=".9"/>
+          <rect x="92" y="26" width="58" height="5" rx="2.5" fill="#A855F7" opacity=".55"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="nav">
+  <button id="prev" aria-label="Назад">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div class="counter"><b id="counterCur">01</b><span id="counterTotal"> / 12</span></div>
+  <button id="next" aria-label="Вперёд">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+  </button>
+</div>
+<div class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> листать · <kbd>F</kbd> на весь экран</div>
+
+<script>
+(function(){
+  /* ===== cover title: split into letters for stagger ===== */
+  document.querySelectorAll('.cover-title').forEach(ct=>{
+    ct.innerHTML=[...ct.textContent].map((ch,i)=>
+      ch===' '?' ':`<span class="ltr" style="transition-delay:${.15+i*.06}s;animation-delay:${i*.12}s,${i*.15}s">${ch}</span>`).join('');
+  });
+
+  /* ===== starfield + shooting stars (canvas) ===== */
+  const cv=document.getElementById('starCanvas');
+  const cx=cv.getContext('2d');
+  let W,H,stars=[],meteors=[];
+  // состояние облёта камеры вокруг сцены
+  let yaw=0,yawTarget=0,pitch=0,pitchTarget=0;
+  function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;
+    stars=Array.from({length:240},()=>({
+      x:Math.random()*2-1,y:Math.random()*2-1,z:Math.random()*2-1,
+      r:Math.random()*1.4+.3,tw:Math.random()*Math.PI*2,sp:.3+Math.random()*1.2,
+      blink:Math.random()<.16,px:0,py:0,seen:false}));
+  }
+  resize();addEventListener('resize',resize);
+  function spawnMeteor(){
+    meteors.push({x:Math.random()*W*.8+W*.1,y:-20,vx:-(2+Math.random()*3),vy:4+Math.random()*4,life:1});
+    setTimeout(spawnMeteor,3000+Math.random()*6000);
+  }
+  setTimeout(spawnMeteor,2000);
+  const stage=document.getElementById('stage');
+  function tick(t){
+    cx.clearRect(0,0,W,H);
+    // плавный доворот камеры к целевому углу обзора
+    yaw+=(yawTarget-yaw)*0.045;
+    pitch+=(pitchTarget-pitch)*0.045;
+    const cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+    const S=Math.max(W,H)*0.62,PERSP=2.2,D=2.6;   // разброс, перспектива, дистанция камеры
+    // параллакс ближнего плана (орбы) — едут противоходом облёту
+    if(stage)stage.style.transform=`translate3d(${-sy*9}%,${sp*6}%,0) scale(1.06)`;
+    for(const s of stars){
+      let a;
+      if(s.blink){a=.1+.9*Math.pow(Math.abs(Math.sin(t*.0012*s.sp+s.tw)),14);}
+      else{a=.18+.72*Math.abs(Math.sin(t*.0007*s.sp+s.tw));}
+      // вращение точки вокруг Y (облёт) и X (наклон)
+      const x1=s.x*cy - s.z*sy, z1=s.x*sy + s.z*cy;
+      const y1=s.y*cp - z1*sp,  z2=s.y*sp + z1*cp;
+      const depth=D - z2;                            // глубина от камеры (>0 всегда)
+      const k=PERSP/depth;                           // перспективное сжатие
+      const sx=W/2 + x1*k*S, sxy=H/2 + y1*k*S;
+      const df=Math.max(0,Math.min(1,(D+1-depth)/2));// затухание по глубине
+      const aa=a*(.35+.65*df), rr=s.r*k;
+      cx.globalAlpha=aa;cx.fillStyle='#fff';
+      // полоса при быстром движении (во время облёта)
+      if(s.seen){
+        const vx=sx-s.px,vy=sxy-s.py,spd=Math.hypot(vx,vy);
+        if(spd>2.2){
+          cx.strokeStyle='rgba(255,255,255,'+(aa*.85)+')';
+          cx.lineWidth=rr;cx.lineCap='round';
+          cx.beginPath();cx.moveTo(s.px,s.py);cx.lineTo(sx,sxy);cx.stroke();
+        }
+      }
+      if(s.blink&&aa>.6){
+        cx.shadowColor='#fff';cx.shadowBlur=8*aa;
+        cx.beginPath();cx.arc(sx,sxy,rr*(1+aa*.8),0,7);cx.fill();cx.shadowBlur=0;
+      }else{
+        cx.beginPath();cx.arc(sx,sxy,rr,0,7);cx.fill();
+      }
+      s.px=sx;s.py=sxy;s.seen=true;
+    }
+    for(let i=meteors.length-1;i>=0;i--){
+      const m=meteors[i];
+      m.x+=m.vx;m.y+=m.vy;m.life-=.008;
+      if(m.life<=0||m.y>H+40){meteors.splice(i,1);continue}
+      const g=cx.createLinearGradient(m.x,m.y,m.x-m.vx*14,m.y-m.vy*14);
+      g.addColorStop(0,'rgba(255,255,255,'+(.9*m.life)+')');
+      g.addColorStop(1,'rgba(168,85,247,0)');
+      cx.globalAlpha=1;cx.strokeStyle=g;cx.lineWidth=2;cx.lineCap='round';
+      cx.beginPath();cx.moveTo(m.x,m.y);cx.lineTo(m.x-m.vx*14,m.y-m.vy*14);cx.stroke();
+    }
+    cx.globalAlpha=1;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  /* ===== typewriter for chapter nicknames ===== */
+  function typeNick(el){
+    if(!el||el.dataset.typed)return;el.dataset.typed='1';
+    const txt=el.dataset.nick||'';let i=0;
+    const caret=el.querySelector('.typing');
+    (function step(){
+      el.firstChild.textContent=txt.slice(0,++i);
+      if(i<txt.length)setTimeout(step,110);
+      else if(caret)caret.remove();
+    })();
+  }
+
+  /* ===== slides & nav ===== */
+  const slides=[...document.querySelectorAll('.slide')];
+  const total=slides.length;
+  let idx=0;
+  const counterCur=document.getElementById('counterCur');
+  const progress=document.getElementById('progress');
+  const indicators=document.getElementById('indicators');
+
+  slides.forEach((_,i)=>{
+    const dot=document.createElement('i');
+    dot.addEventListener('click',()=>go(i));
+    indicators.appendChild(dot);
+  });
+  function syncIndicators(){
+    [...indicators.children].forEach((d,i)=>d.classList.toggle('active',i===idx));
+  }
+  function pad(n){return String(n).padStart(2,'0')}
+  let rocketTimer=null,trailTimer=null;
+  function launchRocket(){
+    const rocket=document.getElementById('rocket');
+    const scene=document.getElementById('finalScene');
+    clearTimeout(rocketTimer);clearInterval(trailTimer);
+    document.querySelectorAll('.tpart,.smoke,.spark').forEach(p=>p.remove());
+    rocket.classList.remove('launch');
+    scene.classList.remove('dragged');
+    document.body.classList.remove('rumble');
+    void rocket.offsetWidth;
+    // повернуть ракету по направлению полёта
+    const dx=1.58*innerWidth,dy=-1.6*innerHeight;
+    rocket.style.transform=`rotate(${Math.atan2(dy,dx)}rad)`;
+    rocketTimer=setTimeout(()=>{
+      rocket.classList.add('launch');
+      scene.classList.add('dragged');
+      document.body.classList.add('rumble');
+      // вспышка зажигания + ударная волна
+      document.body.classList.add('warping');
+      setTimeout(()=>document.body.classList.remove('warping'),1300);
+      const ang=Math.atan2(dy,dx),ux=Math.cos(ang),uy=Math.sin(ang);
+      trailTimer=setInterval(()=>{
+        const r=rocket.getBoundingClientRect();
+        if(r.right<0||r.left>innerWidth||r.bottom<0||r.top>innerHeight)return;
+        // точка сопла (хвост ракеты)
+        const bx=r.left+r.width/2-ux*r.width*0.40;
+        const by=r.top+r.height/2-uy*r.width*0.40;
+        // раскалённое ядро
+        const core=document.createElement('div');core.className='tpart';
+        const cs=16+Math.random()*22;core.style.width=core.style.height=cs+'px';
+        core.style.left=(bx-cs/2+(Math.random()*14-7))+'px';
+        core.style.top=(by-cs/2+(Math.random()*14-7))+'px';
+        document.body.appendChild(core);setTimeout(()=>core.remove(),1400);
+        // клуб дыма — расширяется и сносится назад/вниз
+        const sm=document.createElement('div');sm.className='smoke';
+        const ss=34+Math.random()*42;sm.style.width=sm.style.height=ss+'px';
+        sm.style.left=(bx-ss/2)+'px';sm.style.top=(by-ss/2)+'px';
+        sm.style.setProperty('--sdx',(-ux*40+(Math.random()*40-20))+'px');
+        sm.style.setProperty('--sdy',(-uy*40+30+Math.random()*30)+'px');
+        document.body.appendChild(sm);setTimeout(()=>sm.remove(),1700);
+        // искры
+        for(let k=0;k<3;k++){
+          const sp=document.createElement('div');sp.className='spark';
+          const sz=3+Math.random()*4;sp.style.width=sp.style.height=sz+'px';
+          sp.style.left=(bx-sz/2)+'px';sp.style.top=(by-sz/2)+'px';
+          const spd=40+Math.random()*90,da=ang+Math.PI+(Math.random()*1.2-0.6);
+          sp.style.setProperty('--vx',(Math.cos(da)*spd)+'px');
+          sp.style.setProperty('--vy',(Math.sin(da)*spd+20)+'px');
+          document.body.appendChild(sp);setTimeout(()=>sp.remove(),650);
+        }
+      },22);
+      setTimeout(()=>{clearInterval(trailTimer);document.body.classList.remove('rumble')},2100);
+    },4000);
+  }
+  const tints=[document.getElementById('tintA'),document.getElementById('tintB')];
+  let tintIdx=0,curAccent=null,warpClassTimer=null,warpCount=0;
+  function sectorBg(c){
+    return `radial-gradient(55% 75% at 18% 12%, ${c}59, transparent 62%),`+
+           `radial-gradient(45% 65% at 84% 78%, ${c}40, transparent 60%),`+
+           `radial-gradient(70% 60% at 60% 30%, ${c}1f, transparent 70%)`;
+  }
+  function switchSector(acc){
+    if(acc===curAccent)return;
+    const first=curAccent===null;
+    curAccent=acc;
+    const nextT=tints[tintIdx^=1],prevT=tints[tintIdx^1];
+    nextT.style.background=sectorBg(acc);
+    nextT.classList.add('on');
+    prevT.classList.remove('on');
+    if(!first){
+      // облёт: камера заходит то справа, то слева — проходя через центр (смена угла обзора)
+      warpCount++;
+      const side=(warpCount%2)?1:-1;          // справа / слева попеременно
+      yawTarget=side*1.05;                      // ~60° угол обзора
+      pitchTarget=((warpCount%4<2)?1:-1)*0.14;  // лёгкий наклон сверху/снизу
+      clearTimeout(warpClassTimer);
+      document.body.classList.add('warping');
+      warpClassTimer=setTimeout(()=>document.body.classList.remove('warping'),1400);
+    }
+  }
+  function go(i){
+    i=Math.max(0,Math.min(total-1,i));
+    if(i===idx)return;
+    slides[idx].classList.remove('active');
+    slides[idx].classList.toggle('prev',i>idx);
+    idx=i;
+    slides[idx].classList.add('active');
+    slides[idx].classList.remove('prev');
+    counterCur.textContent=pad(idx+1);
+    progress.style.width=((idx+1)/total*100)+'%';
+    const acc=slides[idx].dataset.accent||'#A855F7';
+    document.documentElement.style.setProperty('--accent',acc);
+    switchSector(acc);
+    document.getElementById('topBrand').style.display=(idx===0)?'none':'';
+    syncIndicators();
+    const nickEl=slides[idx].querySelector('.ch-nick');
+    if(nickEl)setTimeout(()=>typeNick(nickEl),500);
+    if(idx===total-1){spawnParticles();launchRocket();}
+  }
+
+  function spawnParticles(){
+    const scene=document.getElementById('finalScene');
+    if(!scene||scene.dataset.spawned)return;
+    scene.dataset.spawned='1';
+    const colors=['#A855F7','#65E0C4','#FB7185','#FBBF24','#FFFFFF'];
+    for(let i=0;i<44;i++){
+      const p=document.createElement('div');
+      p.className='particle';
+      const size=3+Math.random()*9;
+      p.style.width=size+'px';p.style.height=size+'px';
+      p.style.background=colors[i%colors.length];
+      p.style.boxShadow='0 0 12px '+colors[i%colors.length];
+      p.style.left=(Math.random()*100)+'%';
+      p.style.bottom='-30px';
+      p.style.animationDelay=(Math.random()*6)+'s';
+      p.style.animationDuration=(5+Math.random()*5)+'s';
+      scene.appendChild(p);
+    }
+  }
+
+  const clock=document.getElementById('clock');
+  function updateClock(){
+    const d=new Date();
+    clock.textContent=String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+  }
+  updateClock();setInterval(updateClock,30000);
+
+  document.getElementById('next').onclick=()=>go(idx+1);
+  document.getElementById('prev').onclick=()=>go(idx-1);
+
+  document.addEventListener('keydown',e=>{
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(idx+1)}
+    else if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(idx-1)}
+    else if(e.key==='Home'){go(0)}
+    else if(e.key==='End'){go(total-1)}
+    else if(e.key==='f'||e.key==='F'){
+      if(!document.fullscreenElement)document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+
+  let touchX=null;
+  document.addEventListener('touchstart',e=>{touchX=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',e=>{
+    if(touchX===null)return;
+    const dx=e.changedTouches[0].clientX-touchX;
+    if(Math.abs(dx)>50)go(idx+(dx<0?1:-1));
+    touchX=null;
+  });
+
+  document.addEventListener('click',e=>{
+    if(e.target.closest('.nav,.indicators,button,kbd'))return;
+    const w=innerWidth;
+    if(e.clientX>w*0.82)go(idx+1);
+    else if(e.clientX<w*0.18)go(idx-1);
+  });
+
+  slides[0].classList.add('active');
+  switchSector(slides[0].dataset.accent||'#A855F7');
+  document.getElementById('topBrand').style.display='none';
+  counterCur.textContent='01';document.getElementById('counterTotal').textContent=' / '+pad(total);
+  progress.style.width=(1/total*100)+'%';
+  syncIndicators();
+})();
+</script>
+</body>
+</html>
